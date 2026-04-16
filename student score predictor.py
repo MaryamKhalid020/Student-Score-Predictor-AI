@@ -6,7 +6,7 @@
 ============================================================
 """
 
-# ── Imports ───────────────────────────────────────────────
+# ── Imports 
 import pandas as pd
 import matplotlib.pyplot as plt
 import warnings
@@ -19,7 +19,7 @@ from sklearn.model_selection import train_test_split
 warnings.filterwarnings("ignore")
 
 
-# ── 1. Dataset ────────────────────────────────────────────
+# ── 1. Dataset
 def load_data():
     data = {
         "Hours": [1, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 9],
@@ -30,7 +30,7 @@ def load_data():
     return df
 
 
-# ── 2. Preprocessing ──────────────────────────────────────
+# ── 2. Preprocessing 
 def preprocess(df):
     X = df[["Hours"]].values
     y = df["Marks"].values
@@ -38,14 +38,14 @@ def preprocess(df):
     return train_test_split(X, y, test_size=0.2, random_state=42)
 
 
-# ── 3. Train Model ────────────────────────────────────────
+# ── 3. Train Model
 def train_model(X_train, y_train):
     model = LinearRegression()
     model.fit(X_train, y_train)
     return model
 
 
-# ── 4. Evaluate (simple) ───────────────────────────────────
+# ── 4. Evaluate
 def evaluate_model(model, X_test, y_test):
     y_pred = model.predict(X_test)
 
@@ -56,7 +56,7 @@ def evaluate_model(model, X_test, y_test):
     return y_pred
 
 
-# ── 5. Plot ───────────────────────────────────────────────
+# ── 5. Plot
 def plot_results(model, df):
     plt.scatter(df["Hours"], df["Marks"])
     plt.plot(df["Hours"], model.predict(df[["Hours"]]))
@@ -66,7 +66,7 @@ def plot_results(model, df):
     plt.show()
 
 
-# ── 6. TKINTER GUI ────────────────────────────────────────
+# ── 6. TKINTER GUI
 class ScoreApp:
     def __init__(self, root, model):
         self.model = model
@@ -99,25 +99,16 @@ class ScoreApp:
             messagebox.showerror("Error", "Please enter a valid number")
 
 
-# ── MAIN ──────────────────────────────────────────────────
+# ── MAIN
 if __name__ == "__main__":
 
-    # Load data
     df = load_data()
 
-    # Split data
     X_train, X_test, y_train, y_test = preprocess(df)
-
-    # Train model
     model = train_model(X_train, y_train)
-
-    # Evaluate
     evaluate_model(model, X_test, y_test)
-
-    # Plot
     plot_results(model, df)
-
-    # GUI
+ 
     root = tk.Tk()
     app = ScoreApp(root, model)
     root.mainloop()
